@@ -3,7 +3,125 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>banking-dashboard</title>
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+      }
+
+      .subheading-center {
+        color: #1e3c72;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 4%;
+      }
+
+      .input-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      #input-form {
+        /* background: #42a5f5; */
+        background: #ffffff;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 2%;
+        padding: 3%;
+        width: 80%;
+        max-width: 400px;
+        font-family: Arial, sans-serif;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-top: 3%;
+        font-size: 1.1rem;
+        color: #333;
+      }
+      input {
+        padding: 3%;
+        margin-top: 1%;
+        border: 1px solid #ccc;
+        border-radius: 4%;
+        width: 100%;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+
+      .submit-btn {
+        background: #1e3c72;
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 4%;
+        border-radius: 4%;
+        margin-top: 4%;
+        font-size: 100%;
+        cursor: pointer;
+      }
+
+      .submit-btn:hover {
+        background: #162c54;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="input-card">
+      <form id="input-form">
+        <h2 class="subheading-center">Secure Card Verification</h2>
+        <div>
+          <label for="card-number">Card Number</label>
+          <input
+            type="text"
+            id="card-number"
+            required
+            placeholder="1482 4293 2981"
+            maxlength="19"
+          />
+        </div>
+
+        <div>
+          <label for="cardholder-name">CardHolder Name</label>
+          <input
+            type="text"
+            id="cardholder-name"
+            required
+            placeholder="jain mrkherji"
+          />
+        </div>
+
+        <div>
+          <label for="expiry-date">Expiry Date</label>
+          <input type="date" id="expiry-date" required />
+        </div>
+
+        <div>
+          <label for="security-code">Security Code</label>
+          <input
+            type="password"
+            id="security-code"
+            required
+            placeholder="9231"
+          />
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById("card-number").addEventListener("input", (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.replace(/(.{4})/g, "$1 ").trim();
+        e.target.value = value;
+      });
+    </script>
+  </body>
 </html>
