@@ -55,7 +55,7 @@
         box-sizing: border-box;
       }
 
-      .submit-btn {
+      #submit-btn {
         background: #1e3c72;
         color: white;
         border: none;
@@ -67,7 +67,7 @@
         cursor: pointer;
       }
 
-      .submit-btn:hover {
+      #submit-btn:hover {
         background: #162c54;
       }
     </style>
@@ -80,6 +80,7 @@
           <label for="card-number">Card Number</label>
           <input
             type="text"
+            name="card-number"
             id="card-number"
             required
             placeholder="1482 4293 2981"
@@ -91,6 +92,7 @@
           <label for="cardholder-name">CardHolder Name</label>
           <input
             type="text"
+            name="cardholder-name"
             id="cardholder-name"
             required
             placeholder="jain mrkherji"
@@ -99,20 +101,21 @@
 
         <div>
           <label for="expiry-date">Expiry Date</label>
-          <input type="date" id="expiry-date" required />
+          <input type="date" name="expiry-date" id="expiry-date" required />
         </div>
 
         <div>
           <label for="security-code">Security Code</label>
           <input
             type="password"
+            name="password"
             id="security-code"
             required
             placeholder="9231"
           />
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+        <button type="submit" id="submit-btn">Submit</button>
       </form>
     </div>
 
@@ -122,6 +125,94 @@
         value = value.replace(/(.{4})/g, "$1 ").trim();
         e.target.value = value;
       });
+
+      const inputForm = document.getElementById("input-form");
+      const submitBtn = document.getElementById("submit-btn");
+
+      inputForm.addEventListener("submit", (e) => formSubmit(e));
+
+      let cardData = {};
+
+      function formSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(inputForm);
+
+        const cardNumber = formData.get("card-number").replaceAll(" ", ""); // or replace(/\s/g,"");
+        const cardHolderName = formData
+          .get("cardholder-name")
+          .toUpperCase()
+          .trim();
+        const expiryDate = formData.get("expiry-date");
+        const password = formData.get("password");
+
+        // cardNumber validation using luhn algorithm
+        if (!luhnCheck(cardNumber)) {
+          showError("Invalid Card Number");
+          return;
+        }
+
+        // cardHolderName Validaton
+        for (const ch of cardHolderName) {
+          if (
+            !(
+              (ch >= "A" && ch <= "Z") ||
+              (ch >= "a" && ch <= "z") ||
+              ch === " "
+            )
+          ) {
+            showError("Invalid Card Holder Name");
+            return;
+          }
+        }
+
+        // expiryDate Validation
+
+        let today = new Date();
+        let expDate = new Date(expiryDate);
+
+        // console.log(today, expDate);
+
+        if (expDate < today) {
+          showError("Card is expired");
+          return;
+        }
+
+        // security Code Validation
+
+        if (!/^\d{3,4}$/.test(password)) {
+          showError("Invalid Security Code");
+          return;
+        }
+
+        // card verified successfully..
+        // alert("Card Verified Successfully!");
+        window.location.href = "dashboard.html";
+
+        function showError(message) {
+          alert(message);
+        }
+
+        function luhnCheck(num) {
+          let arr = num
+            .split("")
+            .reverse()
+            .map((x) => parseInt(x));
+          let sum = 0;
+          for (let i = 0; i < arr.length; i++) {
+            let digit = arr[i];
+            if (i % 2 !== 0) {
+              digit *= 2;
+              if (digit > 9) {
+                digit = digit - 9;
+              }
+            }
+            sum += digit;
+          }
+
+          return sum % 10 === 0;
+        }
+      }
     </script>
   </body>
 </html>

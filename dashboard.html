@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      #dashboard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* height: 90vh; */
+        gap: 10vh;
+      }
+
+      #message {
+        text-align: center;
+      }
+
+      .heading {
+        font-size: 2rem;
+      }
+
+      #balance-container {
+        font-size: 2rem;
+        background: skyblue;
+        color: cornflowerblue;
+      }
+
+      #balance {
+        color: cadetblue;
+        background: white;
+      }
+
+      #dashboard-actions {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20%;
+      }
+
+      #dashboard-actions button {
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 2rem;
+        background: #9bc6c7;
+        transition: background 0.2s ease-in;
+      }
+
+      #dashboard-actions button:hover {
+        background: #4e83d9;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">
+      <h3 class="heading">Welcome to the Dashboard</h3>
+    </div>
+    <div id="dashboard">
+      <div id="balance-container">
+        Balance : <span id="balance">$5000</span>
+      </div>
+      <div id="dashboard-actions">
+        <button id="transfer-btn" onclick="Transfer()">Transfer</button>
+        <button id="bills-btn" onclick="payBills()">Pay Bills</button>
+        <button id="statement-btn" onclick="showStatements()">
+          View Statements
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
